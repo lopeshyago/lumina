@@ -21,5 +21,7 @@ RUN npm install -g serve
 # Copy the production build
 COPY --from=builder /app/dist ./dist
 
-EXPOSE 4173
-CMD ["serve", "-s", "dist", "-l", "4173"]
+# Allow overriding the port via $PORT (default 4173 for Vite preview)
+ENV PORT=4173
+EXPOSE $PORT
+CMD ["sh", "-c", "serve -s dist -l ${PORT}"]
